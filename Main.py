@@ -30,7 +30,7 @@ def powercurve(u, inter_method = "Linear", cut_in=3, cut_out=25, u_rated=11, pow
 
     Returns
     -------
-            Power value in MW at wind speed provided in u
+            Power value in MW 
     """
 
     
