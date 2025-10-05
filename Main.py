@@ -6,17 +6,16 @@ def powercurve(u, inter_method = "Linear", cut_in=3, cut_out=25, u_rated=11, pow
        interpolation method (inter_method), cut_in wind speed, cut_out wind speed, rated wind speed(u_rated)
        rated power (power_rated).
     
-    Define a simple power curve using linear interpolation.
-
+    
     Wind turbine power curve shape :
         
-    1) 0 below cut_in speed
-    2) inter_method*P_rated for wind speeds greater than equal to cut_in and less than u_rated, where inter_method
+    1) Power = 0 below cut_in speed
+    2) Power = inter_method*P_rated for wind speeds greater than equal to cut_in and less than u_rated, where inter_method
        can only take "Linear" or "Cubic" values
     3) For "Linear" interpolation method, inter_method = (u-cut_in)/(u_rated-cut_in)
     4) For "Cubic" interploation method,  inter_method = (u/u_rated)**3
-    4) power_rated for wind speeds greater than equal to u_rated and less than cut_out
-    4) 0 above cut_out
+    4) Power = power_rated for wind speeds greater than equal to u_rated and less than cut_out
+    4) Power = 0 above cut_out
    
     Parameters
     ----------
@@ -24,7 +23,7 @@ def powercurve(u, inter_method = "Linear", cut_in=3, cut_out=25, u_rated=11, pow
     cut_in    : cut-in wind speed m/s (default is [3 m/s])  that denotes the minimal wind speed the turbine starts to generate power
     cut_out   : cut-out wind speed m/s (default is [25 m/s]) that denotes the wind speed the turbines stops generating power
     u_rated   : rated wind speed m/s (default is [11 m/s]) that denotes the wind speed the turbine reaches the rated power
-    P_rated   : rated power MW, (default is [15 MW]) of the turbine
+    power_rated   : rated power MW, (default is [15 MW]) of the turbine
     inter_method : interpolation method (default is "Linear") , can be be "Linear" or "Cubic"
     
 
@@ -48,7 +47,7 @@ def powercurve(u, inter_method = "Linear", cut_in=3, cut_out=25, u_rated=11, pow
                 Power = power_rated*(u/u_rated)**3            # expression for cubic interpolation method
         
     elif u >= u_rated and u < cut_out:                        # if the wind speed is greater than equal to rated wind 
-                                                              # wind speed then Power is equal to rated Power
+                                                              # and less than cutout wind speed then Power is rated Power
         Power = power_rated
         
     elif u >= cut_out:
@@ -70,7 +69,7 @@ u = float(input("Enter wind speed in m/s : "))                # enter wind speed
 
 inter_method = input("Select interpolation method from Linear or Cubic : ")          # input interpolation method
 
-if inter_method != "Linear" and inter_method != "Cubic":                            #raise error incorrect input
+if inter_method != "Linear" and inter_method != "Cubic":                            #raise error for incorrect input
    raise ValueError("Interploation method can only be Linear or Cubic, the default is Linear")
 
 cut_in = float(input("Enter cut in wind speed in m/s : "))   # cut in wind speed in m/s
